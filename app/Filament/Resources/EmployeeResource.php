@@ -116,9 +116,7 @@ class EmployeeResource extends Resource
                     ->modalHeading('QR Code Pegawai')
                     ->icon('heroicon-o-qr-code')
                     ->modalContent(function ($record) {
-                        $qr = base64_encode(
-                            \SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(250)->generate($record->qr_code)
-                        );
+                        $qr = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->margin(2)->generate($record->qr_code);
 
                         return view('filament.components.qr-modal', [
                             'qrImage' => $qr,

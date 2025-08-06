@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>QR Code Pegawai</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center p-4">
     <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
 
-        <img src="{{asset('images/logo.svg')}}" alt="Citoz Sport Center Logo" class="w-36 h-36 flex items-center justify-center mx-auto"/>
+        <img src="{{ asset('images/logo.svg') }}" alt="Citoz Sport Center Logo"
+            class="w-36 h-36 flex items-center justify-center mx-auto" />
         <h3 class="text-xl font-bold text-center italic">Citoz Sport Center</h3>
         <h1 class="text-2xl font-bold text-center text-orange-600 mb-4">QR Code Pegawai</h1>
 
@@ -24,7 +27,8 @@
             </div>
             <div class="flex justify-between">
                 <span class="text-gray-500">Jabatan</span>
-                <span class="font-semibold text-gray-800">{{ \Illuminate\Support\Str::title(str_replace('_', ' ', $employee->position)) }}</span>
+                <span
+                    class="font-semibold text-gray-800">{{ \Illuminate\Support\Str::title(str_replace('_', ' ', $employee->position)) }}</span>
             </div>
             <div class="flex justify-between">
                 <span class="text-gray-500">Tanggal Lahir</span>
@@ -49,4 +53,5 @@
         </div>
     </div>
 </body>
+
 </html>
