@@ -119,12 +119,6 @@ class MemberResource extends Resource
                     ->dehydrated() // pastikan tetap dikirim ke database
                     ->required()
                     ->label('Berlaku sampai'),
-
-                // Forms\Components\Select::make('status')
-                //     ->enum(\App\Enums\MemberStatus::class)
-                //     ->options(\App\Enums\MemberStatus::class)
-                //     ->default(\App\Enums\MemberStatus::ACTIVE)
-                //     ->required()
             ]);
     }
 
@@ -132,6 +126,10 @@ class MemberResource extends Resource
     {
         return $table
             ->columns([
+
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Member')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('package.name')
                     ->label('Jenis Paket')
                     ->formatStateUsing(function ($state, $record) {
@@ -158,35 +156,11 @@ class MemberResource extends Resource
                     })
                     ->badge()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('has_transaction')
-                    ->label('Status Transaksi')
+                TextColumn::make('status')
+                    ->label('Status Anggota')
                     ->badge()
-                    ->colors([
-                        'success' => fn($state) => $state === true,
-                        'danger' => fn($state) => $state === false,
-                    ])
-                    ->formatStateUsing(fn($state) => $state ? 'Sudah Transaksi' : 'Belum Transaksi'),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nama Member')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->limit(5)
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('social_media')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
-                    ->label('No Hp')
-                    ->searchable(),
-                // Tables\Columns\TextColumn::make('gender')
-                //     ->label('Jenis Kelamin')
-
-                //     ->formatStateUsing(function ($state) {
-                //         return match ($state) {
-                //             'M' => 'Laki-laki',
-                //             'F' => 'Perempuan',
-                //             default => 'Tidak Diketahui',
-                //         };
-                //     }),
+                    ->color(fn(Member $record) => $record->status->getColor())
+                    ->formatStateUsing(fn(Member $record) => $record->status->getLabel()),
 
                 Tables\Columns\TextColumn::make('joined')
                     ->date()
@@ -196,12 +170,20 @@ class MemberResource extends Resource
                     ->date()
                     ->label('Berakhir')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('No Hp')
+                    ->searchable(),
 
-                TextColumn::make('status')
-                    ->label('Status')
+                Tables\Columns\TextColumn::make('has_transaction')
+                    ->label('Status Transaksi')
                     ->badge()
-                    ->color(fn(Member $record) => $record->status->getColor())
-                    ->formatStateUsing(fn(Member $record) => $record->status->getLabel()),
+                    ->colors([
+                        'success' => fn($state) => $state === true,
+                        'danger' => fn($state) => $state === false,
+                    ])
+                    ->formatStateUsing(fn($state) => $state ? 'Sudah Transaksi' : 'Belum Transaksi'),
+
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -211,15 +193,22 @@ class MemberResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('status')
-                ->multiple()
-                ->options(\App\Enums\MemberStatus::class),
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ViewAction::make()
+                Tables\Actions\Action::make('qr_code')
+                ->label('Lihat QR')
+                ->modalHeading('QR Code Membership')
+                ->icon('heroicon-o-qr-code')
+                ->modalContent(function ($record) {
+                    $qrSvg = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->margin(2)->generate($record->qr_code);
+
+                    return view('filament.components.qr-modal-member', [
+                        'qrSvg' => $qrSvg,
+                        'memberName' => $record->name,
+                    ]);
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

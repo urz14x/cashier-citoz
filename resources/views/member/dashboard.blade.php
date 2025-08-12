@@ -25,7 +25,7 @@
 
         {{-- Header --}}
         <div class="text-center space-y-2">
-            <img src="{{ asset('images/logo.svg') }}" class="w-20 h-20 mx-auto" />
+            <img src="{{ asset('images/logo.svg') }}" class="w-32 h-32 mx-auto" />
             <h1 class="text-3xl font-extrabold text-slate-800 ">Citoz Sport Center</h1>
             <h2 class="text-sm  text-gray-500 tracking-wide">Dashboard Membership GYM</h2>
         </div>

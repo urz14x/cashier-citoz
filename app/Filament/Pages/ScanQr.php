@@ -10,7 +10,7 @@ class ScanQr extends Page
 
     protected static string $view = 'filament.pages.scan-qr';
 
-    protected static ?string $title = 'Scan QR ';
+    protected static ?string $title = 'Scan QR Pegawai';
     protected static ?string $navigationGroup = 'Menu Pegawai';
     public static function canAccess(): bool
     {
