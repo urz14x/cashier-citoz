@@ -1,7 +1,11 @@
 <x-filament::page>
-    <div class="flex items-center justify-center bg-gray-900 text-gray-800">
+
+    <div class="flex items-center justify-center flex-col bg-gray-900 text-gray-800">
+        <img src="{{ asset('images/logo.svg') }}" alt="Logo Gym"
+        class="w-11 h-11 rounded-full shadow-lg border-2 border-green-500 mx-auto" />
         <div class="w-full max-w-xl space-y-6 p-6 rounded-2xl shadow-lg bg-gray-800 border border-gray-700">
-            <h2 class="text-2xl font-bold text-center text-gray-100">🎥 Scan QR Member</h2>
+
+            <h2 class="text-2xl font-bold text-center text-gray-800">🎥 Scan QR Member</h2>
 
             <div id="reader" class="mx-auto border-4 border-green-500 rounded-lg shadow-lg" style="width: 500px;"></div>
         </div>
@@ -51,9 +55,12 @@
             });
         }
 
-        scanner.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 300 },
+        scanner.start({
+                facingMode: "environment"
+            }, {
+                fps: 10,
+                qrbox: 300
+            },
             onScanSuccess
         );
     </script>
