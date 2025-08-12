@@ -213,12 +213,8 @@ class MemberResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
-                    ->options(collect(\App\Enums\MemberStatus::cases())->mapWithKeys(fn($status) => [
-                        $status->value => $status->getLabel(),
-                    ])->toArray()),
-                Tables\Filters\Filter::make('expired_only')
-                    ->label('Sudah Expired')
-                    ->query(fn($query) => $query->expired())
+                ->multiple()
+                ->options(\App\Enums\MemberStatus::class),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

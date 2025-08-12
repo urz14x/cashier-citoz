@@ -19,5 +19,5 @@ enum PaymentMethod: string implements HasLabel
             self::CASH => 'success',
             self::BANK_TRANSFER => 'warning',
         };
-}
+    }
 }

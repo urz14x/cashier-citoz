@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('stock_adjustments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained();
+            $table->enum('adjustment_type', ['increase', 'decrease']);
             $table->integer('quantity_adjusted');
             $table->text('reason');
             $table->timestamps();

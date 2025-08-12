@@ -28,6 +28,13 @@ class StockAdjustmentResource extends Resource
                     ->preload()
                     ->required()
                     ->hiddenOn(StockAdjustmentsRelationManager::class),
+                Forms\Components\Select::make('adjustment_type')
+                    ->label('Tipe Penyesuaian')
+                    ->options([
+                        'increase' => 'Tambah Stok',
+                        'decrease' => 'Kurangi Stok',
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('quantity_adjusted')
                     ->required()
                     ->numeric(),
@@ -51,6 +58,16 @@ class StockAdjustmentResource extends Resource
                 Tables\Columns\TextColumn::make('quantity_adjusted')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('adjustment_type')
+                    ->label('Tipe')
+                    ->badge()
+                    ->colors([
+                        'success' => 'increase',
+                        'danger' => 'decrease',
+                    ]),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Dibuat Oleh')
+                    ->default('-'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

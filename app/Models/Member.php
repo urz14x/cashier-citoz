@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Str;
 use App\Enums\Gender;
 use App\Enums\MemberStatus;
 use Carbon\Carbon;
@@ -74,8 +74,14 @@ class Member extends Model
             default => 'secondary',
         };
     }
-
+    protected static function booted()
+    {
+        static::creating(function ($member) {
+            $member->qr_code = Str::uuid();
+        });
+    }
     protected $casts = [
         'gender' => Gender::class,
+        'status' => \App\Enums\MemberStatus::class,
     ];
 }
