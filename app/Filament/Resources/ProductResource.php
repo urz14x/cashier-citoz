@@ -80,7 +80,9 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('category.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('image')->circular(),
+                    Tables\Columns\ImageColumn::make('image')
+    ->getStateUsing(fn ($record) => $record->image ? asset('storage/' . $record->image) : null)
+    ->circular(),
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('sku')
                     ->label('SKU')

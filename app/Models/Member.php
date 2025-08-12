@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Support\Str;
 use App\Enums\Gender;
 use App\Enums\MemberStatus;
@@ -80,8 +81,8 @@ class Member extends Model
             $member->qr_code = Str::uuid();
         });
     }
+
     protected $casts = [
         'gender' => Gender::class,
-        'status' => \App\Enums\MemberStatus::class,
     ];
 }
