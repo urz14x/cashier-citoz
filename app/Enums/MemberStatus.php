@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
@@ -12,9 +13,9 @@ enum MemberStatus: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::ACTIVE => 'Aktif',
-            self::EXTEND => 'Perpanjang',
-            self::EXPIRED => 'Kadaluarsa',
+            self::ACTIVE => 'ACTIVE',
+            self::EXTEND => 'EXTEND',
+            self::EXPIRED => 'EXPIRED',
         };
     }
 

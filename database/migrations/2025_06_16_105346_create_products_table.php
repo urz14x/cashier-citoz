@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('stock_quantity');
             $table->integer('price');
             $table->integer('cost_price');
+            $table->boolean('needs_adjustment')->default(false);
             $table->timestamps();
         });
 

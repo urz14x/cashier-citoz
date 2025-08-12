@@ -15,6 +15,7 @@ return new class extends Migration
 
         Schema::create('members', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('package_id')->nullable()->constrained();
             $table->foreignId('personal_trainer_id')->nullable()->constrained()->nullOnDelete();
             $table->string('name');
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->date('joined');
             $table->date('expired')->nullable();
             $table->enum('status', ["active", "extend", "expired"])->default('active');
+            $table->uuid('qr_code')->unique();
             $table->timestamps();
         });
 

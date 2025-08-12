@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             @foreach ($categoryStats as $stat)
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+                <div class="dark:bg-gray-900 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
                         {{ $stat['name'] }}
                     </div>

@@ -43,7 +43,8 @@ class EmployeeResource extends Resource
                     ->options([
                         'M' => 'Pria',
                         'F' => 'Wanita'
-                    ]),
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('social_media')
                     ->label('Sosial Media (Instagram/Facebook dll')
                     ->maxLength(255),
@@ -116,12 +117,10 @@ class EmployeeResource extends Resource
                     ->modalHeading('QR Code Pegawai')
                     ->icon('heroicon-o-qr-code')
                     ->modalContent(function ($record) {
-                        $qr = base64_encode(
-                            \SimpleSoftwareIO\QrCode\Facades\QrCode::format('png')->size(250)->generate($record->qr_code)
-                        );
+                        $qrSvg = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->margin(2)->generate($record->qr_code);
 
                         return view('filament.components.qr-modal', [
-                            'qrImage' => $qr,
+                            'qrSvg' => $qrSvg,
                             'employeeName' => $record->name,
                         ]);
                     }),

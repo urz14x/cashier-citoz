@@ -52,6 +52,7 @@ class ProductResource extends Resource
                     }),
                 Forms\Components\MarkdownEditor::make('description')
                     ->maxLength(65535)
+                    ->required()
                     ->columnSpanFull(),
                 Forms\Components\Group::make([
                     Forms\Components\TextInput::make('stock_quantity')

@@ -75,9 +75,37 @@ class CreateTransaction extends Page implements HasForms
         $this->record->calculateTotal(); // ⬅️ gunakan ini!
     }
 
+    // public function finalizeOrder(): void
+    // {
+    //     $this->updateOrder();
+    //     $this->record->update(['status' => OrderStatus::COMPLETED]);
+    //     $this->redirect('/app/orders');
+    // }
+
     public function finalizeOrder(): void
     {
         $this->updateOrder();
+
+        foreach ($this->record->orderDetails as $detail) {
+            $product = $detail->product;
+
+            if ($product) {
+                $newQty = $product->stock_quantity - $detail->quantity;
+
+                // Tandai jika stok minus
+                if ($newQty < 0) {
+                    $product->update([
+                        'stock_quantity' => $newQty,
+                        'needs_adjustment' => true
+                    ]);
+                } else {
+                    $product->update([
+                        'stock_quantity' => $newQty
+                    ]);
+                }
+            }
+        }
+
         $this->record->update(['status' => OrderStatus::COMPLETED]);
         $this->redirect('/app/orders');
     }
