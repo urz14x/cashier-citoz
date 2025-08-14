@@ -1,18 +1,15 @@
 <?php
 
 namespace App\Providers\Filament;
-
-use App\Filament\Widgets\StatsOverview;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
+
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -41,7 +38,8 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Orange,
             ])
-            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogo(asset('images/csc-logo.png'))
+            ->favicon(asset('images/csc-logo.ico'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

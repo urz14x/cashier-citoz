@@ -156,11 +156,11 @@ class MemberResource extends Resource
                     })
                     ->badge()
                     ->sortable(),
-                TextColumn::make('status')
-                    ->label('Status Anggota')
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
-                    ->color(fn(Member $record) => $record->status->getColor())
-                    ->formatStateUsing(fn(Member $record) => $record->status->getLabel()),
+                    ->color(fn($state) => $state instanceof \App\Enums\MemberStatus ? $state->getColor() : 'secondary')
+                    ->formatStateUsing(fn($state) => $state instanceof \App\Enums\MemberStatus ? $state->getLabel() : $state),
 
                 Tables\Columns\TextColumn::make('joined')
                     ->date()
@@ -198,17 +198,17 @@ class MemberResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('qr_code')
-                ->label('Lihat QR')
-                ->modalHeading('QR Code Membership')
-                ->icon('heroicon-o-qr-code')
-                ->modalContent(function ($record) {
-                    $qrSvg = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->margin(2)->generate($record->qr_code);
+                    ->label('Lihat QR')
+                    ->modalHeading('QR Code Membership')
+                    ->icon('heroicon-o-qr-code')
+                    ->modalContent(function ($record) {
+                        $qrSvg = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->margin(2)->generate($record->qr_code);
 
-                    return view('filament.components.qr-modal-member', [
-                        'qrSvg' => $qrSvg,
-                        'memberName' => $record->name,
-                    ]);
-                }),
+                        return view('filament.components.qr-modal-member', [
+                            'qrSvg' => $qrSvg,
+                            'memberName' => $record->name,
+                        ]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
