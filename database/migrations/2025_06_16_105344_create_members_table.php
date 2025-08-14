@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('gender', ["M","F"])->default('M');
             $table->date('joined');
             $table->date('expired')->nullable();
-            $table->enum('status', ["active", "extend", "expired"])->default('active');
+
             $table->uuid('qr_code')->unique();
             $table->timestamps();
         });

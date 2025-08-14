@@ -13,9 +13,9 @@ enum MemberStatus: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::ACTIVE => 'ACTIVE',
-            self::EXTEND => 'EXTEND',
-            self::EXPIRED => 'EXPIRED',
+            self::ACTIVE => 'Active',
+            self::EXTEND => 'Extend',
+            self::EXPIRED => 'Expired',
         };
     }
 
